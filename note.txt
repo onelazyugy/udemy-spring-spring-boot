@@ -1,0 +1,8 @@
+cloud environment - use yml file
+
+spring MVC
+    different type of template engine for spring mvc
+    -Apache Velocity
+    -Apache FreeMaker
+    -Pebble
+    -Thymeleaf
