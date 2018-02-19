@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by VTL on 2/18/18.
  */
 @RestController
-@RequestMapping(path = "/demo")
+@RequestMapping(path = "/")
 public class DemoController {
-    @RequestMapping(value = "hello/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "demo/{name}", method = RequestMethod.GET)
     public String hello(@PathVariable(value="name") String name) {
         return "Hello " + name;
     }

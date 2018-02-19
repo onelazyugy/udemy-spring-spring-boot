@@ -17,7 +17,7 @@ public class GreetingController {
     @Autowired
     private GreetingService greetingService;
 
-    @RequestMapping(path="hello/{name}", method = RequestMethod.GET)
+    @RequestMapping(path="greeting/{name}", method = RequestMethod.GET)
     public String hello(@PathVariable(value="name") String name) {
         return greetingService.sayHello(name);
     }
