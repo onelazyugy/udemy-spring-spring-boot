@@ -3,6 +3,7 @@ package com.viet.le.springboot.controller;
 import com.viet.le.springboot.model.Product;
 import com.viet.le.springboot.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +25,11 @@ public class ProductsController {
 
     @RequestMapping(path = "{id}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable(name = "id") String id) {
-        return productRepository.findOne(id);
+        return this.productRepository.findOne(id);
     }
 
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Product saveProduct(Product product) {
+        return this.productRepository.save(product);
+    }
 }
