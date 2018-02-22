@@ -4,10 +4,7 @@ import com.viet.le.springboot.model.Product;
 import com.viet.le.springboot.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by associate on 2/21/18.
@@ -29,7 +26,7 @@ public class ProductsController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Product saveProduct(Product product) {
+    public Product saveProduct(@RequestBody Product product) {
         return this.productRepository.save(product);
     }
 }
