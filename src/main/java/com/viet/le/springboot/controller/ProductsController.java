@@ -48,5 +48,11 @@ public class ProductsController {
         }
     }
 
-
+    @RequestMapping(path = "{id}", method = RequestMethod.DELETE)
+    public void deleteProduct(@PathVariable(name = "id") String id) {
+        Product foundProduct = this.productRepository.findOne(id);
+        if(foundProduct != null) {
+            this.productRepository.delete(foundProduct);
+        }
+    }
 }
