@@ -1,7 +1,9 @@
 package com.viet.le.springboot.controller;
 
+import com.viet.le.springboot.exception.CustomException;
 import com.viet.le.springboot.model.Product;
 import com.viet.le.springboot.repository.ProductRepository;
+import com.viet.le.springboot.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,44 +17,41 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/api/products/")
 public class ProductsController {
 
-    private ProductRepository productRepository;
     private Logger LOG = LoggerFactory.getLogger(ProductsController.class);
-
+    private ProductService productService;
+    //setter injection of productService
     @Autowired
-    public void productRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
     }
 
     @RequestMapping(path = "{id}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable(name = "id") String id) {
-        return this.productRepository.findOne(id);
+        return this.productService.getProduct(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Product saveProduct(@RequestBody Product product) {
-        return this.productRepository.save(product);
+        return this.productService.saveProduct(product);
     }
 
     @RequestMapping(path="{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Product updateProduct(@RequestBody Product productToUpdate, @PathVariable(name = "id") String id) {
-        Product foundProduct = this.productRepository.findOne(id);
-        if(foundProduct != null) {
-            foundProduct.setName(productToUpdate.getName());
-            foundProduct.setDescription(productToUpdate.getDescription());
-            foundProduct.setType(productToUpdate.getType());
-            foundProduct.setCategory(productToUpdate.getCategory());
-            return this.productRepository.save(foundProduct);
-        } else {
-            LOG.info("No products found with given id");
-            return productToUpdate;
-        }
+        return this.productService.updateProduct(productToUpdate, id);
     }
 
     @RequestMapping(path = "{id}", method = RequestMethod.DELETE)
     public void deleteProduct(@PathVariable(name = "id") String id) {
-        Product foundProduct = this.productRepository.findOne(id);
-        if(foundProduct != null) {
-            this.productRepository.delete(foundProduct);
-        }
+        this.productService.deleteProduct(id);
+    }
+
+    @RequestMapping(path = "test", method = RequestMethod.GET)
+    public void test() {
+        throw new NullPointerException("null");
+    }
+
+    @RequestMapping(path = "custom", method = RequestMethod.GET)
+    public void custom() throws CustomException {
+        throw new CustomException("custom exception", "CUSTOM");
     }
 }

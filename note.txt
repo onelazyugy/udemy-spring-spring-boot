@@ -6,3 +6,6 @@ spring MVC
     -Apache FreeMaker
     -Pebble
     -Thymeleaf
+
+
+ControllerAdvice - sits on top of all controller to handle exception throws by the controller
