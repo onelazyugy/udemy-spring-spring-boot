@@ -2,8 +2,11 @@ package com.viet.le.springboot.controller;
 
 import com.viet.le.springboot.exception.CustomException;
 import com.viet.le.springboot.model.Product;
-import com.viet.le.springboot.repository.ProductRepository;
 import com.viet.le.springboot.service.ProductService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(path = "/api/products/")
+@Api(value = "ProductsControllerAPI", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductsController {
     private Logger LOG = LoggerFactory.getLogger(ProductsController.class);
 
@@ -32,6 +36,8 @@ public class ProductsController {
      * @return Product
      */
     @RequestMapping(path = "{id}", method = RequestMethod.GET)
+    @ApiOperation("Gets the product with specific id")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK", response = Product.class)})
     public Product getProduct(@PathVariable(name = "id") String id) {
         return this.productService.getProduct(id);
     }
