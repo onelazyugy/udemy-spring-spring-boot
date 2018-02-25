@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class ProductService {
     private Logger LOG = LoggerFactory.getLogger(ProductService.class);
     private ProductRepository productRepository;
-
+    //setter inject of productRepository
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;

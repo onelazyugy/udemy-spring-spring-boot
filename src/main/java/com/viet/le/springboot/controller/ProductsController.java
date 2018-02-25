@@ -16,30 +16,51 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/api/products/")
 public class ProductsController {
-
     private Logger LOG = LoggerFactory.getLogger(ProductsController.class);
+
+    //SETTER INJECTION of productService
     private ProductService productService;
-    //setter injection of productService
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
     }
+    //--END SETTER INJECT
 
+    /**
+     * GET request to get a product
+     * @param id product's id
+     * @return Product
+     */
     @RequestMapping(path = "{id}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable(name = "id") String id) {
         return this.productService.getProduct(id);
     }
 
+    /**
+     * POST request to create a new product
+     * @param product Product entity
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Product saveProduct(@RequestBody Product product) {
         return this.productService.saveProduct(product);
     }
 
+    /**
+     * PUT request to update a product
+     * @param productToUpdate Product entity
+     * @param id product's id
+     * @return
+     */
     @RequestMapping(path="{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Product updateProduct(@RequestBody Product productToUpdate, @PathVariable(name = "id") String id) {
         return this.productService.updateProduct(productToUpdate, id);
     }
 
+    /**
+     * DELETE request to remove a product
+     * @param id product's id
+     */
     @RequestMapping(path = "{id}", method = RequestMethod.DELETE)
     public void deleteProduct(@PathVariable(name = "id") String id) {
         this.productService.deleteProduct(id);
